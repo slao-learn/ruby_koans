@@ -31,11 +31,23 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 def score(dice)
   # You need to write this method
+	counts = Hash.new(0)
   score = 0
   for val in dice
-    score += 50 if val == 5
-    score += 100 if val == 1
+		counts[val] += 1;
   end
+	counts.each do |index, val|
+		if val >= 3
+			val -= 3
+			if index == 1
+				score += 1000
+			else
+				score += index * 100
+			end
+		end
+		score += 100 * val if index == 1
+		score += 50 * val if index == 5
+	end
   score
 end
 
